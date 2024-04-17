@@ -1,3 +1,4 @@
+# Part 1
 ## CMake  
 Set up CMakeLists.txt to generate build files.  
 ## Install C++  
@@ -29,4 +30,13 @@ We can tell C++ to use an assembler on our new .asm file and use ld to create th
 
 This gives us the executable that returns the exit code!  
 
+# Part 2
 
+## Refactoring  
+Moving all token related code to tokenization header file.  
+The new Tokenizer class makes use of peek and consume methods that improve tokenizing and readability.  
+
+## Parse Trees  
+
+## Formal Grammar   
+### Production Rules

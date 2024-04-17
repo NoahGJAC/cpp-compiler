@@ -4,4 +4,5 @@ project(hydrogen)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(hydro src/main.cpp)
+add_executable(hydro src/main.cpp
+        src/tokenization.hpp)

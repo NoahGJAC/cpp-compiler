@@ -4,16 +4,8 @@
 #include <optional>
 #include <vector>
 
-enum class TokenType {
-    _return,
-    int_lit,
-    semi
-};
+#include "tokenization.hpp"
 
-struct Token {
-    TokenType type;
-    std::optional<std::string> value {};
-};
 
 //TODO: Parse before turning tokens to assembly
 std::string  tokens_to_asm(const std::vector<Token>& tokens){
@@ -21,10 +13,12 @@ std::string  tokens_to_asm(const std::vector<Token>& tokens){
     output << "global _start\n_start:\n";
     for (int i = 0; i < tokens.size(); i++){
         const Token& token = tokens.at(i);
-        if (token.type == TokenType::_return){
+        if (token.type == TokenType::exit){
             if (i + 1 < tokens.size() && tokens.at(i + 1).type == TokenType::int_lit){
                 if (i +2 < tokens.size() && tokens.at(i + 2).type == TokenType::semi){
+                    // rax register, 60 = exit syscall name
                     output << "    mov rax, 60\n";
+                    // arg0 rdi error_code
                     output << "    mov rdi," << tokens.at(i + 1).value.value() << "\n";
                     output << "    syscall";
                 }
@@ -34,54 +28,6 @@ std::string  tokens_to_asm(const std::vector<Token>& tokens){
     return output.str();
 }
 
-std::vector<Token> tokenize(const std::string& str){
-    std::vector<Token> tokens;
-
-    std::string buf;
-    for (int i = 0; i < str.length(); i++){
-        char c = str.at(i);
-        if (std::isalpha(c)){
-            buf.push_back(c);
-            i++;
-            while (std::isalnum(str.at(i))){
-                buf.push_back(str.at(i));
-                i++;
-            }
-            i--;
-
-            if (buf == "return"){
-                tokens.push_back({.type = TokenType::_return});
-                buf.clear();
-                continue;
-            }else{
-                std::cerr << "You messed up!" <<std::endl;
-                exit(EXIT_FAILURE);
-            }
-        }
-        else if (std::isdigit(c)){
-            buf.push_back(c);
-            i++;
-            while (std::isdigit(str.at(i))){
-                buf.push_back(str.at(i));
-                i++;
-            }
-            i--;
-            tokens.push_back({.type = TokenType ::int_lit, .value = buf});
-            buf.clear();
-        }
-        else if (c == ';'){
-            tokens.push_back({.type = TokenType::semi});
-        }
-        else if (std::isspace(c)){
-            continue;
-        }
-        else{
-            std::cerr << "You messed up!" <<std::endl;
-            exit(EXIT_FAILURE);
-        }
-    }
-    return tokens;
-}
 
 int main(int argc, char* argv[]) {
     if (argc != 2) {
@@ -97,7 +43,9 @@ int main(int argc, char* argv[]) {
         contents = contents_stream.str();
         input.close(); // close the file
     }
-    std::vector<Token> tokens = tokenize(contents);
+    // move gives the pointer to Tokenizer and contents loses it
+    Tokenizer tokenizer(std::move(contents));
+    std::vector<Token> tokens = tokenizer.tokenize();
 
     {
         std::fstream file("out.asm", std::ios::out);
