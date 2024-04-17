@@ -40,3 +40,7 @@ The new Tokenizer class makes use of peek and consume methods that improve token
 
 ## Formal Grammar   
 ### Production Rules
+
+## Parser
+
+## Code Generation

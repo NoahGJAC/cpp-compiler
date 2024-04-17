@@ -4,6 +4,7 @@
 #include <optional>
 #include <vector>
 
+#include "parser.hpp"
 #include "tokenization.hpp"
 
 
