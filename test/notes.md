@@ -1,9 +1,9 @@
 ## Steps for the setup
 Install WSL, and a distribution (Ubuntu-22.04)
-	Following these steps:
-		https://learn.microsoft.com/en-us/windows/wsl/install-manual#step-4---download-the-linux-kernel-update-package
-		https://code.visualstudio.com/docs/remote/wsl
-		https://learn.microsoft.com/en-us/windows/wsl/install
+	Following these steps:  
+		- https://learn.microsoft.com/en-us/windows/wsl/install-manual#step-4---download-the-linux-kernel-update-package  
+		- https://code.visualstudio.com/docs/remote/wsl  
+		- https://learn.microsoft.com/en-us/windows/wsl/install  
 
 ## Playing around with assembly  
 
