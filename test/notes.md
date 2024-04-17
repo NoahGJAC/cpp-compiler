@@ -9,7 +9,7 @@ Install WSL, and a distribution (Ubuntu-22.04)
 
 Create a test.asm file  
 
-Install NASM in Linux environment  
+After installing NASM in the Linux environment  
 
 	run $ nasm -felf64.test.asm  
 
