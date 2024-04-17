@@ -18,15 +18,6 @@ public:
     {
     }
 
-private:
-    [[nodiscard]] inline std::optional<Token> peek(int ahead = 1) const {
-        if(m_index + ahead > m_tokens.size()){
-            return {};
-        }else{
-            return m_tokens.at(m_index);
-        }
-    }
-
     std::optional<NodeExpr> parse_expr(){
         if(peek().has_value() && peek().value().type == TokenType::int_lit){
             return NodeExpr{.int_lit = consume()};
@@ -48,13 +39,24 @@ private:
                     exit(EXIT_FAILURE);
                 }
             }
-            if (!peek().has_value() || peek().value().type != TokenType::semi){
+            if (peek().has_value() && peek().value().type == TokenType::semi){
+                consume();
+            }else{
                 std::cerr << "Invalid expression" << std::endl;
                 exit(EXIT_FAILURE);
             }
         }
         m_index = 0;
         return exit_node;
+    }
+
+private:
+    [[nodiscard]] inline std::optional<Token> peek(int ahead = 1) const {
+        if(m_index + ahead > m_tokens.size()){
+            return {};
+        }else{
+            return m_tokens.at(m_index);
+        }
     }
 
     inline Token consume(){

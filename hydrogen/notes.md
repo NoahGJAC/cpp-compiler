@@ -37,10 +37,17 @@ Moving all token related code to tokenization header file.
 The new Tokenizer class makes use of peek and consume methods that improve tokenizing and readability.  
 
 ## Parse Trees  
+Hierarchical representation of the language's syntax structure according to its grammar.
+Each node represents productions of the grammar.  
 
-## Formal Grammar   
+## Formal Grammar  
+Rules that define the syntax of programming languages.  
+
 ### Production Rules
+Core of formal grammar. Production rules define how symbols should be replaced by sequences, like syntatic categories or constructs).
+Used by parsers to construct parse trees and check the input.
+## Parser  
+A component of the compiler that checks the syntactical structure of the input. The parser constructs a parse tree from the grammar.
 
-## Parser
-
-## Code Generation
+## Code Generation  
+The phase where the compiler translate the source code into the target code (assembly).
