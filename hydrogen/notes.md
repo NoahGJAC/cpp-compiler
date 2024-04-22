@@ -18,7 +18,7 @@ Install CLion, connect it to WSL and open project.
 ## Lexical analysis
 Creating parsable pieces from characters.  
 ### Tokens  
-Creating enum for different things we want to parse for (ie. return keyword, integer literals, semicolons).  
+Creating enum for different things we want to parse for (i.e. return keyword, integer literals, semicolons).  
 Creating struct with the TokenType (enum) and the optional value of the token.  
 
 ### Parsing  
@@ -44,7 +44,7 @@ Each node represents productions of the grammar.
 Rules that define the syntax of programming languages.  
 
 ### Production Rules
-Core of formal grammar. Production rules define how symbols should be replaced by sequences, like syntatic categories or constructs).
+Core of formal grammar. Production rules define how symbols should be replaced by sequences, like syntactic categories or constructs.
 Used by parsers to construct parse trees and check the input.
 
 ## Parser  
@@ -67,3 +67,9 @@ Used by compilers for managing functions calls, storing variables and evaluating
 
 ## Unordered/Hash Map
 Used by compiler to map variable names to their stack locations. This allows the generator to quickly look up stack locations.
+
+# Part 4
+
+## Arena Allocator
+
+## Grammar Updates
