@@ -71,10 +71,12 @@ Used by compiler to map variable names to their stack locations. This allows the
 # Part 4
 
 ## Arena Allocator
+A memory allocation system for predictable memory allocation and deallocation. Creates a large memory block and uses offsets to manage allocations. Leads to performance benefits in scenarios where there are many small allocations ande deallocations. Frequently used for compilers.
 
-## Grammar Updates
+## Grammar Updates  
+Added terms which can be integer literals or identifiers. Expressions can be made up of terms or binary expressions. Binary expressions in turn are expressions with binary operations ([Expr] + [Expr]).
 
 # Part 5
 
-## Precedence Climbing
-
+## Precedence Climbing  
+Parsing technique used in compilers to handle binary operator precedence. Useful for when operators have different precedences and associativity. Handles complex expressions in a single pass. Read more here: [Reference used in tutorial](https://eli.thegreenplace.net/2012/08/02/parsing-expressions-by-precedence-climbing).
