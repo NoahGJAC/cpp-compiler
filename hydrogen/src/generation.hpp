@@ -1,6 +1,7 @@
 #pragma once
 
 #include <unordered_map>
+#include <cassert>
 
 #include "parser.hpp"
 
@@ -34,6 +35,31 @@ public:
         std::visit(visitor, term->var);
     }
 
+    void gen_bin_expr(const NodeBinExpr* bin_expr){
+        struct BinExprVisitor{
+            Generator* gen;
+            void operator()(const NodeBinExprAdd* add) const{
+                gen->gen_expr(add->lhs);
+                gen->gen_expr(add->rhs);
+                gen->pop("rax");
+                gen->pop("rbx");
+                gen->m_output << "    add rax, rbx\n";
+                gen->push("rax");
+            }
+
+            void operator()(const NodeBinExprMulti* multi) const{
+                gen->gen_expr(multi->lhs);
+                gen->gen_expr(multi->rhs);
+                gen->pop("rax");
+                gen->pop("rbx");
+                gen->m_output << "    mul rbx\n";
+                gen->push("rax");
+            }
+        };
+        BinExprVisitor visitor{.gen = this};
+        std::visit(visitor, bin_expr->var);
+    }
+
     void gen_expr(const NodeExpr* expr)
     {
         struct ExprVisitor {
@@ -42,13 +68,9 @@ public:
             {
                 gen->gen_term(term);
             }
-            void operator()(const NodeBinExpr* bin_expr) const {
-                gen->gen_expr(bin_expr->add->lhs);
-                gen->gen_expr(bin_expr->add->rhs);
-                gen->pop("rax");
-                gen->pop("rbx");
-                gen->m_output << "    add rax, rbx\n";
-                gen->push("rax");
+            void operator()(const NodeBinExpr* bin_expr) const
+            {
+                gen->gen_bin_expr(bin_expr);
             }
         };
 

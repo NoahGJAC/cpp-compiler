@@ -73,3 +73,8 @@ Used by compiler to map variable names to their stack locations. This allows the
 ## Arena Allocator
 
 ## Grammar Updates
+
+# Part 5
+
+## Precedence Climbing
+
