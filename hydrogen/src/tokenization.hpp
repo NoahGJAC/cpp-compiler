@@ -14,13 +14,17 @@ enum class TokenType {
     let,
     eq,
     plus,
-    star
+    star,
+    sub,
+    div
 };
 
 bool is_bin_op(TokenType type){
     switch (type) {
         case TokenType::plus:
         case TokenType::star:
+        case TokenType::div:
+        case TokenType::sub:
             return true;
 
             default:
@@ -31,8 +35,10 @@ bool is_bin_op(TokenType type){
 std::optional<int> bin_prec(TokenType type){
     switch (type) {
         case TokenType::plus:
+        case TokenType::sub:
             return 1;
         case TokenType::star:
+        case TokenType::div:
             return 2;
         default:
             return {};
@@ -108,6 +114,15 @@ public:
             else if (peek().value() == '*'){
                 consume();
                 tokens.push_back({.type = TokenType::star});
+                continue;
+            }else if (peek().value() == '-'){
+                consume();
+                tokens.push_back({.type = TokenType::sub});
+                continue;
+            }
+            else if (peek().value() == '/'){
+                consume();
+                tokens.push_back({.type = TokenType::div});
                 continue;
             }else if (std::isspace(peek().value())) {
                 consume();

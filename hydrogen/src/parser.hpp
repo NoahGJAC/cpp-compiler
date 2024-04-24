@@ -1,6 +1,7 @@
 #pragma once
 
 #include <variant>
+#include <cassert>
 
 #include "tokenization.hpp"
 #include "arena.hpp"
@@ -15,6 +16,10 @@ struct NodeTermIdent{
 
 struct NodeExpr;
 
+struct NodeTermParen{
+    NodeExpr* expr;
+};
+
 struct NodeBinExprAdd{
     NodeExpr* lhs;
     NodeExpr* rhs;
@@ -25,12 +30,22 @@ struct NodeBinExprMulti{
     NodeExpr* rhs;
 };
 
+struct NodeBinExprSub{
+    NodeExpr* lhs;
+    NodeExpr* rhs;
+};
+
+struct NodeBinExprDiv{
+    NodeExpr* lhs;
+    NodeExpr* rhs;
+};
+
 struct NodeBinExpr{
-   std::variant<NodeBinExprAdd*,NodeBinExprMulti*> var;
+   std::variant<NodeBinExprAdd*,NodeBinExprMulti*, NodeBinExprSub*, NodeBinExprDiv*> var;
 };
 
 struct  NodeTerm {
-    std::variant<NodeTermIntLit*, NodeTermIdent*> var;
+    std::variant<NodeTermIntLit*, NodeTermIdent*, NodeTermParen*> var;
 };
 
 struct NodeExpr{
@@ -75,6 +90,19 @@ public:
             expr_ident->ident = ident.value();
             auto term = m_allocator.alloc<NodeTerm>();
             term->var = expr_ident;
+            return term;
+        }
+        else if (auto open_parem = try_consume(TokenType::open_paren)){
+            auto expr = parse_expr();
+            if(!expr.has_value()){
+                std::cerr << "Expected expression" << std::endl;
+                exit(EXIT_FAILURE);
+            }
+            try_consume(TokenType::close_paren, "Expected `;`");
+            auto term_paren = m_allocator.alloc<NodeTermParen>();
+            term_paren->expr = expr.value();
+            auto term = m_allocator.alloc<NodeTerm>();
+            term->var = term_paren;
             return term;
         }
         else
@@ -130,6 +158,20 @@ public:
                 multi->lhs = expr_lhs2;
                 multi->rhs = expr_rhs.value();
                 expr->var = multi;
+            } else if (op.type == TokenType::sub) {
+                auto sub = m_allocator.alloc<NodeBinExprSub>();
+                expr_lhs2->var = expr_lhs->var;
+                sub->lhs = expr_lhs2;
+                sub->rhs = expr_rhs.value();
+                expr->var = sub;
+            }else if (op.type == TokenType::div) {
+                auto div = m_allocator.alloc<NodeBinExprDiv>();
+                expr_lhs2->var = expr_lhs->var;
+                div->lhs = expr_lhs2;
+                div->rhs = expr_rhs.value();
+                expr->var = div;
+            }else {
+                assert(false);
             }
             expr_lhs->var = expr;
 
