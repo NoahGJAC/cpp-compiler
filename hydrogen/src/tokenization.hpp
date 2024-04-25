@@ -16,7 +16,9 @@ enum class TokenType {
     plus,
     star,
     sub,
-    div
+    div,
+    open_curly,
+    close_curly
 };
 
 bool is_bin_op(TokenType type){
@@ -112,6 +114,12 @@ public:
             else if (peek().value() == '/'){
                 consume();
                 tokens.push_back({.type = TokenType::div});
+            } else if(peek().value() == '{'){
+                consume();
+                tokens.push_back({.type = TokenType::open_curly});
+            }else if(peek().value() == '}'){
+                consume();
+                tokens.push_back({.type = TokenType::close_curly});
             }else if (std::isspace(peek().value())) {
                 consume();
             } else {

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <unordered_map>
+#include <map>
 #include <cassert>
 
 #include "parser.hpp"
@@ -157,5 +157,5 @@ private:
     const NodeProg m_prog;
     std::stringstream  m_output;
     size_t m_stack_size = 0;
-    std::unordered_map<std::string, Var> m_vars {};
+    std::map<std::string, Var> m_vars {};
 };
