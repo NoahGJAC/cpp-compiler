@@ -29,7 +29,7 @@ public:
                 }
 
                 std::stringstream offset;
-                offset << "QWORD [rsp + " << (gen->m_stack_size - (*it).stack_loc - 1) * 8 << "]\n";
+                offset << "QWORD [rsp + " << (gen->m_stack_size - (*it).stack_loc - 1) * 8 << "]";
                 gen->push(offset.str());
             }
             void operator()(const NodeTermParen* term_paren) const {
