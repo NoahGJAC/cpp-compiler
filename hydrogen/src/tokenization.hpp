@@ -18,7 +18,8 @@ enum class TokenType {
     sub,
     div,
     open_curly,
-    close_curly
+    close_curly,
+    if_
 };
 
 bool is_bin_op(TokenType type){
@@ -76,6 +77,9 @@ public:
                     buf.clear();
                 } else if (buf == "let"){
                     tokens.push_back({.type = TokenType::let});
+                    buf.clear();
+                } else if (buf =="if"){
+                    tokens.push_back({.type = TokenType::if_});
                     buf.clear();
                 }else {
                     tokens.push_back({.type = TokenType::ident, .value = buf});

@@ -123,12 +123,15 @@ public:
                 gen->m_vars.push_back({.name = stmt_let->ident.value.value(), .stack_loc = gen->m_stack_size});
                 gen->gen_expr(stmt_let->expr);
             }
-            void operator()(const NodeStmtScope* scope) const {
+            void operator()(const NodeScope* scope) const {
                 gen->begin_scope();
                 for (const NodeStmt* stmt : scope->stmts){
                     gen->gen_stmt(stmt);
                 }
                 gen->end_scope();
+            }
+            void operator()(const NodeStmtIf* stmt_if) const {
+                assert(false && "Not implemented");
             }
         };
 
