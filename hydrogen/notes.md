@@ -80,3 +80,9 @@ Added terms which can be integer literals or identifiers. Expressions can be mad
 
 ## Precedence Climbing  
 Parsing technique used in compilers to handle binary operator precedence. Useful for when operators have different precedences and associativity. Handles complex expressions in a single pass. Read more here: [Reference used in tutorial](https://eli.thegreenplace.net/2012/08/02/parsing-expressions-by-precedence-climbing).
+
+# Part 6
+
+## Scopes
+
+## Assembly Jump
