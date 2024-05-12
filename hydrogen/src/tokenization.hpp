@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <utility>
 #include <vector>
 
 
@@ -35,7 +36,7 @@ bool is_bin_op(TokenType type){
     }
 }
 
-std::optional<int> bin_prec(TokenType type){
+inline std::optional<int> bin_prec(const TokenType type){
     switch (type) {
         case TokenType::plus:
         case TokenType::minus:
@@ -55,7 +56,7 @@ struct Token {
 
 class Tokenizer{
 public:
-    inline explicit Tokenizer(const std::string& src)
+    explicit Tokenizer(std::string  src)
         : m_src(std::move(src))
     {
 
@@ -136,15 +137,16 @@ public:
     };
 
 private:
-    [[nodiscard]] inline std::optional<char> peek(int offset = 0) const {
+    [[nodiscard]] std::optional<char> peek(size_t offset = 0) const {
         if(m_index + offset >= m_src.length()){
             return {};
-        }else{
-            return m_src.at(m_index + offset);
         }
+
+        return m_src.at(m_index + offset);
+
     }
 
-    inline char consume(){
+     char consume(){
         return m_src.at(m_index++);
 
     }

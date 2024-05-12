@@ -33,9 +33,9 @@ int main(int argc, char* argv[]) {
         std::cerr << "Invalid program" << std::endl;
         exit(EXIT_FAILURE);
     }
-    Generator generator(prog.value());
 
     {
+        Generator generator(prog.value());
         std::fstream file("out.asm", std::ios::out);
         file << generator.gen_prog();
     }
