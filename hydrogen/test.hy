@@ -4,4 +4,10 @@ let x = 1;
 if (x - 1) {
     exit(69);
 }
-//exit(1);
+
+/*
+Multi-line Comment
+exit(2);
+*/
+
+exit(1);
