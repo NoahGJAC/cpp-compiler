@@ -103,7 +103,7 @@ public:
             else if (peek().value() == '/' && peek(1).has_value() && peek(1).value() == '*'){
                 consume();
                 consume();
-                while(peek().has_value() &&  peek().value() == '*' && peek(1).has_value() && peek(1).value() == '/'){
+                while(peek().has_value() &&  peek().value() != '*' && peek(1).has_value() && peek(1).value() != '/'){
                     consume();
                 }
                 if(peek().has_value())

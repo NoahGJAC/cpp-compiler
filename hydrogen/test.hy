@@ -6,8 +6,8 @@ if (x - 1) {
 }
 
 /*
-Multi-line Comment
-exit(2);
+Multi-line Comment*/
+/*exit(3);
 */
 
 exit(1);
