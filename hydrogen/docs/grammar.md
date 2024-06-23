@@ -5,13 +5,14 @@ $$
     \begin{cases} 
         \text{exit}([\text{Expr}]); \\
         \text{let}\space\text{ident} = [\text{Expr}]; \\
-        \text{if} ([\text{Expr}])[\text{Scope}]\text{[Elif]}\\
+        \text{if} ([\text{Expr}])[\text{Scope}]\text{[\text{[IfPred]}]}\\
         \text{[Scope]}\\
     \end{cases} \\
     \text{[Scope]} &\to \{[\text{Stmt}]^*\}\\
-    \text{[Elif]} &\to
+    \text{[IfPred]} &\to
     \begin{cases}
-        \text{elif}(\text{[Expr]})\text{[Scope]}\\
+        \text{elif}(\text{[Expr]})\text{[Scope]}\text{[IfPred]}\\
+        \text{[Else]}\\
         \epsilon
     \end{cases}\\
     \text{[Else]} &\to
