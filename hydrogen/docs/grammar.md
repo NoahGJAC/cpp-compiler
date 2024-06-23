@@ -5,10 +5,20 @@ $$
     \begin{cases} 
         \text{exit}([\text{Expr}]); \\
         \text{let}\space\text{ident} = [\text{Expr}]; \\
-        \text{if} ([\text{Expr}])[\text{Scope}]\\
+        \text{if} ([\text{Expr}])[\text{Scope}]\text{[Elif]}\\
         \text{[Scope]}\\
     \end{cases} \\
     \text{[Scope]} &\to \{[\text{Stmt}]^*\}\\
+    \text{[Elif]} &\to
+    \begin{cases}
+        \text{elif}(\text{[Expr]})\text{[Scope]}\\
+        \epsilon
+    \end{cases}\\
+    \text{[Else]} &\to
+    \begin{cases}
+        \text{else}(\text{[Expr]})\text{[Scope]}\\
+        \epsilon
+    \end{cases}\\
     [\text{Expr}] &\to 
     \begin{cases}
         [\text{Term}] \\
