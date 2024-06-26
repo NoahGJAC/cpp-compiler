@@ -12,12 +12,7 @@ $$
     \text{[IfPred]} &\to
     \begin{cases}
         \text{elif}(\text{[Expr]})\text{[Scope]}\text{[IfPred]}\\
-        \text{[Else]}\\
-        \epsilon
-    \end{cases}\\
-    \text{[Else]} &\to
-    \begin{cases}
-        \text{else}(\text{[Expr]})\text{[Scope]}\\
+        \text{else}\text{[Scope]}\\
         \epsilon
     \end{cases}\\
     [\text{Expr}] &\to 
