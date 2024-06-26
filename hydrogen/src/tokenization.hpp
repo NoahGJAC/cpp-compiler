@@ -20,7 +20,9 @@ enum class TokenType {
     fslash,
     open_curly,
     close_curly,
-    if_
+    if_,
+    else_,
+    elif
 };
 
 bool is_bin_op(TokenType type){
@@ -31,7 +33,7 @@ bool is_bin_op(TokenType type){
         case TokenType::minus:
             return true;
 
-            default:
+        default:
             return false;
     }
 }
@@ -79,10 +81,16 @@ public:
                 } else if (buf == "let"){
                     tokens.push_back({.type = TokenType::let});
                     buf.clear();
-                } else if (buf =="if"){
+                } else if (buf == "if"){
                     tokens.push_back({.type = TokenType::if_});
                     buf.clear();
-                }else {
+                } else if (buf == "elif"){
+                    tokens.push_back({.type = TokenType::elif});
+                    buf.clear();
+                } else if (buf == "else") {
+                    tokens.push_back({.type=TokenType::else_});
+                    buf.clear();
+                } else {
                     tokens.push_back({.type = TokenType::ident, .value = buf});
                     buf.clear();
                 }
