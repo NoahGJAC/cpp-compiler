@@ -113,7 +113,8 @@ public:
 
      void error_expected(const std::string& msg)
     {
-         std::cerr << "[Parse Error] Expected " << msg << " on line " << peek(-1).value().line << std::endl;
+         const Token tok = peek(-1).value();
+         std::cerr << "[Parse Error] Expected " << msg << " on line " << tok.line << " at column " << tok.col << std::endl;
          exit(EXIT_FAILURE);
     }
 

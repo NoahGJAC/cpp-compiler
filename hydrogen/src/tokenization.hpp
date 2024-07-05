@@ -95,7 +95,7 @@ inline std::optional<int> bin_prec(const TokenType type){
 struct Token {
     TokenType type;
     int line;
-    // int col;
+    int col;
     std::optional<std::string> value {};
 };
 
@@ -120,22 +120,22 @@ public:
                     buf.push_back(consume());
                 }
                 if (buf == "exit") {
-                    tokens.push_back({TokenType::exit, line_count});
+                    tokens.push_back({TokenType::exit, line_count, column_count});
                     buf.clear();
                 } else if (buf == "let"){
-                    tokens.push_back({TokenType::let, line_count});
+                    tokens.push_back({TokenType::let, line_count, column_count});
                     buf.clear();
                 } else if (buf == "if"){
-                    tokens.push_back({TokenType::if_, line_count});
+                    tokens.push_back({TokenType::if_, line_count, column_count});
                     buf.clear();
                 } else if (buf == "elif"){
-                    tokens.push_back({TokenType::elif, line_count});
+                    tokens.push_back({TokenType::elif, line_count, column_count});
                     buf.clear();
                 } else if (buf == "else") {
-                    tokens.push_back({TokenType::else_, line_count});
+                    tokens.push_back({TokenType::else_, line_count, column_count});
                     buf.clear();
                 } else {
-                    tokens.push_back({TokenType::ident, line_count, buf});
+                    tokens.push_back({TokenType::ident, line_count,column_count, buf});
                     buf.clear();
                 }
             } else if (std::isdigit(peek().value())) {
@@ -143,7 +143,7 @@ public:
                 while (peek().has_value() && std::isdigit(peek().value())) {
                     buf.push_back(consume());
                 }
-                tokens.push_back({TokenType::int_lit, line_count, buf});
+                tokens.push_back({TokenType::int_lit, line_count, column_count, buf});
                 buf.clear();
             } else if (peek().value() == '/' && peek(1).has_value() && peek(1).value() == '/'){
                 consume();
@@ -165,39 +165,40 @@ public:
             }
             else if (peek().value() == '('){
                 consume();
-                tokens.push_back({TokenType::open_paren, line_count});
+                tokens.push_back({TokenType::open_paren, line_count, column_count});
             } else if (peek().value() == ')'){
                 consume();
-                tokens.push_back({TokenType::close_paren, line_count});
+                tokens.push_back({TokenType::close_paren, line_count, column_count});
             } else if (peek().value() == ';') {
                 consume();
-                tokens.push_back({TokenType::semi, line_count});
+                tokens.push_back({TokenType::semi, line_count, column_count});
             }else if (peek().value() == '=') {
                 consume();
-                tokens.push_back({TokenType::eq, line_count});
+                tokens.push_back({TokenType::eq, line_count, column_count});
             }else if (peek().value() == '+') {
                 consume();
-                tokens.push_back({TokenType::plus, line_count});
+                tokens.push_back({TokenType::plus, line_count, column_count});
             }
             else if (peek().value() == '*'){
                 consume();
-                tokens.push_back({TokenType::star, line_count});
+                tokens.push_back({TokenType::star, line_count, column_count});
             }else if (peek().value() == '-'){
                 consume();
-                tokens.push_back({TokenType::minus, line_count});
+                tokens.push_back({TokenType::minus, line_count, column_count});
             }
             else if (peek().value() == '/'){
                 consume();
-                tokens.push_back({TokenType::fslash, line_count});
+                tokens.push_back({TokenType::fslash, line_count, column_count});
             } else if(peek().value() == '{'){
                 consume();
-                tokens.push_back({TokenType::open_curly, line_count});
+                tokens.push_back({TokenType::open_curly, line_count, column_count});
             }else if(peek().value() == '}'){
                 consume();
-                tokens.push_back({TokenType::close_curly, line_count});
+                tokens.push_back({TokenType::close_curly, line_count, column_count});
             }else if (peek().value() == '\n'){
                 consume();
                 line_count++;
+                column_count = 1;
             }else if (std::isspace(peek().value())) {
                 consume();
             } else {
@@ -219,7 +220,10 @@ private:
 
     }
 
+    int column_count = 1;
+
      char consume(){
+        column_count++;
         return m_src.at(m_index++);
 
     }
