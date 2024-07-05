@@ -1,7 +1,7 @@
-let y = (10 - 2 * 3) / 2 ;
+let y = (10 - 2 * 3) / 2;
 let x = 1;
 // Single line-comment
-if (0) {
+if  (4){
     x= 1;
 }elif (0) {
     x=2;
